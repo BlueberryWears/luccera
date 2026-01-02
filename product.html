@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Product | LUCCERA</title>
   <link rel="stylesheet" href="style.css">
@@ -17,6 +17,10 @@
 
 <section class="about" id="product"></section>
 
+<footer>
+  <p>© LUCCERA Enterprises</p>
+</footer>
+
 <script>
   const products = {
     shoe1: { name: "Signature Sneaker", price: "₹6,499" },
@@ -26,21 +30,32 @@
     acc1: { name: "Leather Belt", price: "₹1,999" }
   };
 
-  const id = new URLSearchParams(window.location.search).get("id");
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
   const item = products[id];
 
-  document.getElementById("product").innerHTML = `
-    <h2>${item.name}</h2>
-    <h3>Price: ${item.price}</h3>
-    <a class="btn" href="https://wa.me/91XXXXXXXXXX" target="_blank">
-      Message on WhatsApp to Order
-    </a>
-  `;
-</script>
+  if (!item) {
+    document.getElementById("product").innerHTML =
+      "<h2>Product not found</h2>";
+  } else {
+    const message = encodeURIComponent(
+      `Hi, I want to order ${item.name} for ${item.price}`
+    );
 
-<footer>
-  <p>© LUCCERA Enterprises</p>
-</footer>
+    document.getElementById("product").innerHTML = `
+      <img src="images/${id}.jpg"
+           style="max-width:320px;margin-bottom:20px;border-radius:12px;"
+           alt="${item.name}">
+      <h2>${item.name}</h2>
+      <h3>Price: ${item.price}</h3>
+      <a class="btn"
+         href="https://wa.me/91XXXXXXXXXX?text=${message}"
+         target="_blank">
+        Message on WhatsApp to Order
+      </a>
+    `;
+  }
+</script>
 
 </body>
 </html>
