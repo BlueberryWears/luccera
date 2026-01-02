@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Collection | LUCCERA</title>
+  <title>Product | LUCCERA</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,37 +11,32 @@
 <nav class="nav">
   <div class="logo">LUCCERA</div>
   <div class="nav-links">
-    <a href="index.html">Home</a>
+    <a href="products.html">Back</a>
   </div>
 </nav>
 
-<section class="products">
+<section class="about" id="product"></section>
 
-  <div class="product-card">
-    <h3>Footwear</h3>
-    <p>Premium shoes & sneakers.</p>
-    <a href="category.html?cat=footwear">View Inventory</a>
-  </div>
+<script>
+  const products = {
+    shoe1: { name: "Signature Sneaker", price: "₹6,499" },
+    shoe2: { name: "Leather Trainer", price: "₹7,999" },
+    cloth1: { name: "Premium Hoodie", price: "₹3,499" },
+    perf1: { name: "Oud Noir", price: "₹4,999" },
+    acc1: { name: "Leather Belt", price: "₹1,999" }
+  };
 
-  <div class="product-card">
-    <h3>Clothing</h3>
-    <p>Curated premium apparel.</p>
-    <a href="category.html?cat=clothing">View Inventory</a>
-  </div>
+  const id = new URLSearchParams(window.location.search).get("id");
+  const item = products[id];
 
-  <div class="product-card">
-    <h3>Perfumes</h3>
-    <p>Luxury fragrances.</p>
-    <a href="category.html?cat=perfumes">View Inventory</a>
-  </div>
-
-  <div class="product-card">
-    <h3>Accessories</h3>
-    <p>Belts & essentials.</p>
-    <a href="category.html?cat=accessories">View Inventory</a>
-  </div>
-
-</section>
+  document.getElementById("product").innerHTML = `
+    <h2>${item.name}</h2>
+    <h3>Price: ${item.price}</h3>
+    <a class="btn" href="https://wa.me/91XXXXXXXXXX" target="_blank">
+      Message on WhatsApp to Order
+    </a>
+  `;
+</script>
 
 <footer>
   <p>© LUCCERA Enterprises</p>
