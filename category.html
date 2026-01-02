@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory | LUCCERA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">LUCCERA</div>
+  <div class="nav-links">
+    <a href="products.html">Back</a>
+  </div>
+</nav>
+
+<h1 class="center" id="categoryTitle"></h1>
+
+<section class="products" id="inventory"></section>
+
+<script>
+  const inventory = {
+    footwear: [
+      { id: "shoe1", name: "Signature Sneaker" },
+      { id: "shoe2", name: "Leather Trainer" }
+    ],
+    clothing: [
+      { id: "cloth1", name: "Premium Hoodie" }
+    ],
+    perfumes: [
+      { id: "perf1", name: "Oud Noir" }
+    ],
+    accessories: [
+      { id: "acc1", name: "Leather Belt" }
+    ]
+  };
+
+  const cat = new URLSearchParams(window.location.search).get("cat");
+  document.getElementById("categoryTitle").innerText =
+    cat.charAt(0).toUpperCase() + cat.slice(1);
+
+  inventory[cat].forEach(item => {
+    document.getElementById("inventory").innerHTML += `
+      <div class="product-card">
+        <h3>${item.name}</h3>
+        <a href="product.html?id=${item.id}">View Details</a>
+      </div>
+    `;
+  });
+</script>
+
+<footer>
+  <p>© LUCCERA Enterprises</p>
+</footer>
+
+</body>
+</html>
