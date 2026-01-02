@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product | LUCCERA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">LUCCERA</div>
+  <div class="nav-links">
+    <a href="products.html">Back</a>
+  </div>
+</nav>
+
+<section class="about" id="product"></section>
+
+<script>
+  const products = {
+    shoe1: { name: "Signature Sneaker", price: "₹6,499" },
+    shoe2: { name: "Leather Trainer", price: "₹7,999" },
+    cloth1: { name: "Premium Hoodie", price: "₹3,499" },
+    perf1: { name: "Oud Noir", price: "₹4,999" },
+    acc1: { name: "Leather Belt", price: "₹1,999" }
+  };
+
+  const id = new URLSearchParams(window.location.search).get("id");
+  const item = products[id];
+
+  document.getElementById("product").innerHTML = `
+    <h2>${item.name}</h2>
+    <h3>Price: ${item.price}</h3>
+    <a class="btn" href="https://wa.me/91XXXXXXXXXX" target="_blank">
+      Message on WhatsApp to Order
+    </a>
+  `;
+</script>
+
+<footer>
+  <p>© LUCCERA Enterprises</p>
+</footer>
+
+</body>
+</html>
