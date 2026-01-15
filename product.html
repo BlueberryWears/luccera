@@ -22,12 +22,13 @@
 </footer>
 
 <script>
+  /* ===== PRODUCT DATA ===== */
   const products = {
-    shoe1: { name: "Signature Sneaker", price: "₹6,499" },
-    shoe2: { name: "Leather Trainer", price: "₹7,999" },
-    cloth1: { name: "Premium Hoodie", price: "₹3,499" },
-    perf1: { name: "Oud Noir", price: "₹4,999" },
-    acc1: { name: "Leather Belt", price: "₹1,999" }
+    shoe1: { name: "Signature Sneaker", price: 6499 },
+    shoe2: { name: "Leather Trainer", price: 7999 },
+    cloth1: { name: "Premium Hoodie", price: 3499 },
+    perf1: { name: "Oud Noir", price: 4999 },
+    acc1: { name: "Leather Belt", price: 1999 }
   };
 
   const params = new URLSearchParams(window.location.search);
@@ -35,27 +36,78 @@
   const item = products[id];
 
   if (!item) {
-    document.getElementById("product").innerHTML =
-      "<h2>Product not found</h2>";
+    document.getElementById("product").innerHTML = "<h2>Product not found</h2>";
   } else {
-    const message = encodeURIComponent(
-      `Hi, I want to order ${item.name} for ${item.price}`
-    );
-
     document.getElementById("product").innerHTML = `
       <img src="images/${id}.jpg"
            style="max-width:320px;margin-bottom:20px;border-radius:12px;"
            alt="${item.name}">
       <h2>${item.name}</h2>
-      <h3>Price: ${item.price}</h3>
-      <a class="btn"
-         href="https://wa.me/919359521296?text=${message}"
-         target="_blank">
-        Message on WhatsApp to Order
-      </a>
+      <h3>Price: ₹${item.price}</h3>
+
+      <input id="name" placeholder="Your Name"><br><br>
+      <input id="phone" placeholder="Phone Number"><br><br>
+      <input id="address" placeholder="Full Address"><br><br>
+
+      <select id="size">
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select><br><br>
+
+      <button class="btn" onclick="submitOrder('${id}')">
+        Place Order
+      </button>
     `;
+  }
+</script>
+
+<!-- ===== FIREBASE (NON-MODULE, SAFE) ===== -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyD7YCBNb_9m2vaicD5Za1rZEV2LrcmdHfc",
+    authDomain: "luccera-store.firebaseapp.com",
+    projectId: "luccera-store",
+    storageBucket: "luccera-store.appspot.com",
+    messagingSenderId: "813161410341",
+    appId: "1:813161410341:web:ce2060042a44f09c234cc"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  function submitOrder(productId) {
+    const product = products[productId];
+
+    db.collection("orders").add({
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      address: document.getElementById("address").value,
+      size: document.getElementById("size").value,
+
+      productId: productId,
+      productName: product.name,
+      sellingPrice: product.price,
+      costPrice: Math.round(product.price * 0.6), // adjust later
+      profit: product.price - Math.round(product.price * 0.6),
+
+      paymentMode: "COD",
+      status: "new",
+      createdAt: new Date()
+    })
+    .then(() => {
+      alert("Order placed successfully");
+    })
+    .catch(err => {
+      alert(err.message);
+    });
   }
 </script>
 
 </body>
 </html>
+
